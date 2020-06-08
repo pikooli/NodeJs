@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1><img src="superkitty.jpg" width=50 heigth= 50/>Super chat<img src="superkitty.jpg" width=50 heigth= 50/></h1>
+    <input type='text' id='speudo' placeholder='type your speudo'></input><button id='speudoSend'>send</button>
+    <div id="chat" style="border: 1px solid black; height: 400px;width: 300px;overflow: scroll;"></div>
+    <input type='text' id='message' placeholder="message"/><button id="sendMessage">send</button>
+</body>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src='https://code.jquery.com/jquery-3.5.1.min.js'></script>
+    <script>
+        var io = io.connect();
+
+        var sendMessage = $("#sendMessage");
+        var message = $("#message");
+        var speudo = $("#speudo");
+        var sendSpeudo = $("#speudoSend");
+        var chat = $("#chat");
+        
+        message.keydown((e)=>{
+            if (e.which === 13)
+                sendMessage.trigger("click");
+        })
+        sendMessage.click(function(){
+            if (message.val() != '')
+            {
+                io.emit("message", message.val(), (speudo, content)=>{
+                    chat.append(speudo + " : " + content + "<br/>");
+                });
+                message.val('');
+                $("#chat").scrollTop($("#chat")[0].scrollHeight);            
+            }
+        })
+        speudo.keydown((e)=>{
+            if (e.which === 13)
+                sendSpeudo.trigger("click");
+        })
+        sendSpeudo.click(()=>{
+            if (speudo.val() != '')
+            {
+                io.emit("speudo", speudo.val());
+                speudo.val('');
+            }
+        })
+
+        io.on("message", (message)=>{
+            console.log('receive')
+            chat.append(message.speudo + " : " + message.content + "<br/>");
+            $("#chat").scrollTop($("#chat")[0].scrollHeight);            
+        })
+    </script>
+</html>
