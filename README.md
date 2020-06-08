@@ -1,4 +1,4 @@
-Some project with NodeJS
+Some basic project with NodeJS
 
 Todolist is a basic to do list make with NodeJS, the list is keep in session.
 <image src="Todolist.gif"/><br/>
