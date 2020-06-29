@@ -1,4 +1,4 @@
-<p align="center"><strong>Some basic project with NodeJS<strong/><p/>
+<p align="center"><strong>Some basic project with NodeJS</strong><p/>
 
 Todolist, is a basic to do list make with NodeJS, the list is keep in session.
 <image src="Todolist.gif"/><br/>
